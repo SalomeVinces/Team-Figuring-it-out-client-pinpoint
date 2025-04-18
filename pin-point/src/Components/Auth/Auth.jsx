@@ -14,7 +14,7 @@ const Auth = ({ updateToken }) => {
   const emailRef = useRef(); //
   const passwordRef = useRef();
 
-  const navigate = useNavigate();
+  
 
   
   const handleSubmit = async (e) => {
@@ -59,14 +59,12 @@ const Auth = ({ updateToken }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      
-    
+          
       <h2>{signup ? "Signup" : "Login"}</h2>
       
       {signup && (
         <>
         
-
           <input ref={firstNameRef} placeholder="First Name" required />{" "}
           <input ref={lastNameRef} placeholder="Last Name" required />{" "}
         </>

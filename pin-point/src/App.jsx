@@ -7,6 +7,7 @@ function App () {
 
   return (
     <>
+    <h1>Education.gov</h1>
       <Auth/>
     </>
   )

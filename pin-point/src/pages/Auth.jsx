@@ -7,25 +7,25 @@ import "./Auth.css"
 
 // The Auth component handles user signup and login
 const Auth = ({ updateToken }) => {
- 
+
   const [signup, setSignup] = useState(true);
 
- 
+
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef(); //
   const passwordRef = useRef();
+  const dateOfBirthRef = useRef();
+  const zipCodeRef = useRef();
 
-  
 
-  
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
-    console.log("Form was submitted"); 
+    console.log("Form was submitted");
 
     try {
-      r
+      
       const response = await fetch(
         `http://localhost:8080/users${signup ? "/signup" : "/login"}`,
 
@@ -35,11 +35,13 @@ const Auth = ({ updateToken }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-           
+
             firstName: signup && firstNameRef.current.value,
             lastName: signup && lastNameRef.current.value,
+            dateOfBirth: signup && dateOfBirthRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
+            zipCode: signup && zipCodeRef.current.value,
           }),
         }
       );
@@ -49,29 +51,31 @@ const Auth = ({ updateToken }) => {
 
       console.log(data); // Log the response from the API
 
-      
+
 
       updateToken(data.Token, data.User._id);
 
       navigate("/rooms");
     } catch (err) {
-      console.log(err); 
+      console.log(err);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-          
+
       <h2>{signup ? "Signup" : "Login"}</h2>
-      
+
       {signup && (
         <>
-        
+
           <input ref={firstNameRef} placeholder="First Name" required />{" "}
           <input ref={lastNameRef} placeholder="Last Name" required />{" "}
+          <input ref={dateOfBirthRef} placeholder="Date of Birth" required />{" "}
+          <input ref={zipCodeRef} placeholder="Zip Code" />{" "}
         </>
       )}
-     
+
       <input ref={emailRef} placeholder="Email" required />
       <input ref={passwordRef} placeholder="Password" required />{" "}
       <button>Submit</button> {/* Submit button */}
@@ -82,7 +86,7 @@ const Auth = ({ updateToken }) => {
           setSignup(!signup);
         }}
       >
-       
+
         {signup ? "Need to login?" : "Need to signup?"}
       </button>
     </form>

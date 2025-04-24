@@ -1,15 +1,13 @@
-
 import React, { useRef, useState } from "react";
 import "./Auth.css"
-
-
+import { useNavigate } from "react-router-dom"
 
 
 // The Auth component handles user signup and login
 const Auth = ({ updateToken }) => {
 
   const [signup, setSignup] = useState(true);
-
+  const navigate = useNavigate()
 
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -18,14 +16,13 @@ const Auth = ({ updateToken }) => {
   const dateOfBirthRef = useRef();
   const zipCodeRef = useRef();
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log("Form was submitted");
 
     try {
-      
+
       const response = await fetch(
         `http://localhost:8080/users${signup ? "/signup" : "/login"}`,
 
@@ -46,18 +43,23 @@ const Auth = ({ updateToken }) => {
         }
       );
 
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   throw new Error(errorData.message || "Something went wrong");
+      // }
+
       // Get the response as JSON
       const data = await response.json();
 
       console.log(data); // Log the response from the API
 
-
+      if (data.Error) throw new Error(data.Error)
 
       updateToken(data.Token, data.User._id);
 
-      navigate("/rooms");
+      navigate("/");
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 

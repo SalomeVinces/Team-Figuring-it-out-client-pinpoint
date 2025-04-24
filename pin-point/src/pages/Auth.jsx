@@ -42,12 +42,7 @@ const Auth = ({ updateToken }) => {
           }),
         }
       );
-
-      // if (!response.ok) {
-      //   const errorData = await response.json();
-      //   throw new Error(errorData.message || "Something went wrong");
-      // }
-
+      
       // Get the response as JSON
       const data = await response.json();
 
@@ -57,6 +52,7 @@ const Auth = ({ updateToken }) => {
 
       updateToken(data.Token, data.User._id);
 
+      //! NEED TO EDIT THIS
       navigate("/");
     } catch (err) {
       console.log(err.message);

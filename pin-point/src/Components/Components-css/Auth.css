@@ -1,7 +1,7 @@
 body{
-    background-color: black;
+    background-color: white;
 }
-form{
+/* form{
     width: 50%;
     margin: auto;
     background-color: #8508d8;
@@ -9,7 +9,7 @@ form{
     border-radius: 8px;
     box-shadow: 0 0 4px rgba(0,0,0,0.2);
     margin-top: 100px;
-}
+} */
 input{
     width: 100%;
     padding: 15px;
@@ -18,7 +18,7 @@ input{
     border-radius: 8px;
     margin-bottom: 20px;
 }
-
+/* 
 button{
     padding: 15px 25px;
     border-radius: 30px;
@@ -29,4 +29,4 @@ button{
     cursor: pointer;
     color: white;
     
-}
+} */

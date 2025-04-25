@@ -61,3 +61,15 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+@import "tailwindcss";
+@plugin 'daisyui' {
+  themes: all;
+}
+@plugin "daisyui/theme" {
+  name: "CustomTheme"; /** Custom theme name or target an internal theme to override */
+  default: true;
+  --color-primary: blue;
+  --color-secondary: purple;
+  --color-accent: red;
+}

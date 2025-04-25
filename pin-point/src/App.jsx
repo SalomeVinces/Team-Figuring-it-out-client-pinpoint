@@ -3,11 +3,9 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
 import './App.css'
-import Home from './pages/Home'
-import Service from './pages/Service'
-import Contact from './pages/Contact'
-import Header from './Components/header/Header'
-import Auth from './pages/Auth'
+import Header from './Components/Header'
+import Auth from "./Components/Auth"
+import Home from "./Components/Home"
 
 function App() {
   const [token, setToken] = useState("")
@@ -34,28 +32,28 @@ function App() {
   }, [])
 
   return (
+    <div data-theme="Cupcake">
     <BrowserRouter>
       <Header />
 
       <Routes>
-        <Route
-          path="/"
+        {/* <Route
+          path="/."
           element={
             !token ? (
               <Auth updateToken={updateToken} />
             ) : (
               <Navigate to="/" />
             )}
-        />
+        /> */}
 
-        {/* <Routes>
+       
         <Route path='/' element={<Home />} />
-        <Route path='/services' element={<Service />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/auth' element={<Auth />} /> */}
+        
 
       </Routes>
     </BrowserRouter>
+    </div>
   )
 };
 

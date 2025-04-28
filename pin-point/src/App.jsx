@@ -33,26 +33,25 @@ function App() {
 
   return (
     <div data-theme="Cupcake">
-    <BrowserRouter>
-      <Header />
 
-      <Routes>
-        {/* <Route
-          path="/."
+        <Header />
+        {token && <button style={{ position: "absolute", top: 0, left: 0 }} onClick={handleLogout}>Logout</button>}        
+        
+        <Routes>
+          <Route
+          path="/"
           element={
             !token ? (
               <Auth updateToken={updateToken} />
             ) : (
               <Navigate to="/" />
             )}
-        /> */}
+        />
 
-       
-        <Route path='/' element={<Home />} />
-        
+          <Route path='/home' element={<Home />} />
 
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      
     </div>
   )
 };

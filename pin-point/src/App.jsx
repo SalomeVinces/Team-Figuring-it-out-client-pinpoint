@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 
 import './App.css'
 import Header from './Components/Header'
 import Auth from "./Components/Auth"
 import Home from "./Components/Home"
+import Landing from "./Components/Landing"
 
 function App() {
   const [token, setToken] = useState("")
+  const navigate = useNavigate()
 
   // Update state token variable, and store it in localStorage
   const updateToken = (passedToken, uid) => {
@@ -24,36 +26,46 @@ function App() {
     setToken("");
   }
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, [])
+  const handleNavigation = (route) => {
+    navigate(route)
+    };
 
-  return (
-    <div data-theme="Cupcake">
+    useEffect(() => {
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        setToken(storedToken);
+      }
+    }, [])
 
+    return (
+      <div data-theme="Cupcake">
+
+        {token && <button style={{ position: "absolute", top: 0, left: 0 }} onClick={handleLogout}>Logout</button>}
         <Header />
-        {token && <button style={{ position: "absolute", top: 0, left: 0 }} onClick={handleLogout}>Logout</button>}        
-        
         <Routes>
+          <Route path='/'
+            element={
+              !token ? <Landing handleNavigation={handleNavigation}/>
+                : (<Navigate to="/Auth" />)
+            } />
+
           <Route
-          path="/"
-          element={
-            !token ? (
-              <Auth updateToken={updateToken} />
-            ) : (
-              <Navigate to="/" />
-            )}
-        />
+            path="/Auth"
+            element={
+              !token ? (
+                <Auth updateToken={updateToken} />
+              ) : (
+                <Navigate to="/home" />
+              )}
+          />
 
           <Route path='/home' element={<Home />} />
 
-        </Routes>
-      
-    </div>
-  )
-};
 
-export default App;
+        </Routes>
+
+      </div>
+    )
+  };
+
+  export default App;

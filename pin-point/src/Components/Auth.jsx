@@ -52,8 +52,8 @@ const Auth = ({ updateToken }) => {
 
       updateToken(data.Token, data.User._id);
 
-      //! NEED TO EDIT THIS
-      navigate("/");
+      // //! NEED TO EDIT THIS
+      // navigate("/");
     } catch (err) {
       console.log(err.message);
     }
@@ -69,7 +69,8 @@ const Auth = ({ updateToken }) => {
 
           <input ref={firstNameRef} placeholder="First Name" required />{" "}
           <input ref={lastNameRef} placeholder="Last Name" required />{" "}
-          <input ref={dateOfBirthRef} placeholder="Date of Birth" required />{" "}
+          {/* <input ref={dateOfBirthRef} placeholder="Date of Birth" required />{" "} */}
+          <input ref={dateOfBirthRef} placeholder="Date of Birth" required type= "date"/>{" "}
           <input ref={zipCodeRef} placeholder="Zip Code" />{" "}
         </>
       )}

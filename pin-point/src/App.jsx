@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 
 import './App.css'
-import Header from './Components/Header'
+import Header from './Components/Navbar'
 import Auth from "./Components/Auth"
 import Home from "./Components/Home"
 import Landing from "./Components/Landing"
@@ -24,6 +24,7 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("uid");
     setToken("");
+    
   }
 
   const handleNavigation = (route) => {

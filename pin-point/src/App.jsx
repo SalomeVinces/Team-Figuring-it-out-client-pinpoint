@@ -24,29 +24,33 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("uid");
     setToken("");
+    navigate("/")
   }
 
   const handleNavigation = (route) => {
     navigate(route)
-    };
+  };
 
-    useEffect(() => {
-      const storedToken = localStorage.getItem("token");
-      if (storedToken) {
-        setToken(storedToken);
-      }
-    }, [])
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, [])
 
-    return (
+  return (
+    <>
       <div data-theme="Cupcake">
-
-        {token && <button style={{ position: "absolute", top: 0, left: 0 }} onClick={handleLogout}>Logout</button>}
         <Header />
+
+        {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>}
+
         <Routes>
+          
           <Route path='/'
             element={
-              !token ? <Landing handleNavigation={handleNavigation}/>
-                : (<Navigate to="/Auth" />)
+              !token ? <Landing handleNavigation={handleNavigation} />
+                : (<Navigate to ="/Auth" />)
             } />
 
           <Route
@@ -65,7 +69,8 @@ function App() {
         </Routes>
 
       </div>
-    )
-  };
+    </>
+  )
+};
 
-  export default App;
+export default App;

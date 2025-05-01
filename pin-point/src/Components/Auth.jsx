@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { cloneElement, useEffect, useRef, useState } from "react";
 import "./Components-css/Auth.css"
 import { useNavigate } from "react-router-dom"
 
@@ -16,10 +16,19 @@ const Auth = ({ updateToken }) => {
   const dateOfBirthRef = useRef();
   const zipCodeRef = useRef();
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    console.log(urlParams.get("login"));
+    if (urlParams.get("login")){
+      setSignup(false)
+    }
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log("Form was submitted");
+
 
     try {
 
@@ -53,7 +62,7 @@ const Auth = ({ updateToken }) => {
       updateToken(data.Token, data.User._id);
 
       // //! NEED TO EDIT THIS
-      // navigate("/");
+      navigate("/home");
     } catch (err) {
       console.log(err.message);
     }

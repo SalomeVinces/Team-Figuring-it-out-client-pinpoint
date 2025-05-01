@@ -15,7 +15,7 @@ const Landing = ({handleNavigation}) => {
             {/* //!Place holder for description for landing page */}
             <p>Welcome to landing page!</p>
             <button onClick={() => handleNavigation("/Auth")} >Signup</button>
-            <button onClick={() => handleNavigation("/Auth")} >Login</button>
+            <button onClick={() => handleNavigation("/Auth?login=true")} >Login</button>
             <label htmlFor="myDropdown">State</label>
             <select id="myDropdown" value={selectedValue} onChange={handleChange}>
                 <option value="">-- --</option>

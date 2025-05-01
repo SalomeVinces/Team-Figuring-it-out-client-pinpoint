@@ -1,10 +1,10 @@
 import React from "react";
-//import "./Components-css/Header.css";
+import "./Components-css/Navbar.css";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 shadow-sm bg-primary" >
       <div className="flex-none">
         <button className="btn btn-square btn-ghost">
           <svg

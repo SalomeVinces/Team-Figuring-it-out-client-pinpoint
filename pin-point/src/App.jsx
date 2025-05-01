@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 
 import './App.css'
-import Header from './Components/Navbar'
+import Navbar from './Components/Navbar'
 import Auth from "./Components/Auth"
 import Home from "./Components/Home"
 import Landing from "./Components/Landing"
@@ -40,8 +40,8 @@ function App() {
 
   return (
     <>
-      <div data-theme="Cupcake">
-        <Header />
+      <div data-theme="forest">
+        <Navbar />
 
         {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>}
 

@@ -73,6 +73,7 @@ button:focus-visible {
   --color-secondary: purple;
   --color-accent: red;
 }
+
 @plugin "daisyui/theme" {
   name: "forest"; /** Custom theme name or target an internal theme to override */
   default: true;

@@ -7,6 +7,8 @@ import Navbar from './Components/Navbar'
 import Auth from "./Components/Auth"
 import Home from "./Components/Home"
 import Landing from "./Components/Landing"
+import Verification from './Components/Verification'
+import Survey from './Components/Survey'
 
 function App() {
   const [token, setToken] = useState("")
@@ -64,7 +66,12 @@ function App() {
           />
 
           <Route path='/home' element={<Home />} />
+          
+          {/* Verify routes once verification backend is connected and verify survey route */}
+          
+          <Route path="/verification" element ={ <Verification/>} />
 
+          <Route path ="/survey" element={<Survey/>} />
 
         </Routes>
 

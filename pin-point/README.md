@@ -1,12 +1,35 @@
-# React + Vite
+# 📍 Pinpoint – Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **client-side** repository for **Pinpoint**, an education technology platform focused on enhancing **civic engagement** through interactive and accessible digital experiences.
 
-Currently, two official plugins are available:
+## ✨ What's Included
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This React-based frontend has been structured for clarity, scalability, and user experience, with the following key additions:
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **User-Friendly Design:**
+  - Introduced an accessible and **user-friendly color palette**, optimized for readability and visual comfort.
+  - Focused on a clean UI experience, tailored to users in the **civic tech** and **educational engagement** space.
+
+## 🚀 Getting Started
+
+To run this project locally:
+
+```bash
+git clone https://github.com/SalomeVinces/Team-Figuring-it-out-client-pinpoint.git
+cd pinpoint-client
+npm install
+npm start
+```
+
+## 🎯 Project Goals
+
+- Build a frontend for Pinpoint that is:
+  - Visually engaging and welcoming
+  - Easy to navigate for users of all backgrounds
+  - Inclusive and accessible for educational and civic use cases
+
+## 🛠 Tech Stack
+
+- React.js
+- UI libraries such as Material UI, Tailwind CSS, etc.

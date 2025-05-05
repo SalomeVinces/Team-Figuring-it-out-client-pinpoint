@@ -1,8 +1,10 @@
 import React from "react";
 import "./Components-css/Navbar.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ( {handleNavigation, handleLogout} ) => {
+  const navigate = useNavigate()
+
   return (
     <div className="navbar bg-base-100 shadow-sm bg-primary">
       <div className="navbar-start">
@@ -33,14 +35,24 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
+            {/* <li>
+              <a onClick={() => {
+                navigate("/account")}}>Account</a>
+            </li> */}
+            
             <li>
-              <a>Homepage</a>
+              <a onClick={() => {
+                navigate("/home")}}>Homepage</a>
             </li>
+            
             <li>
-              <a>About</a>
+              <a onClick={() => {
+                navigate("/survey")}}>Survey</a>
             </li>
+            
+            {/* //! Edit so logout displays when user is already signed in */}
             <li>
-              <a>Logout</a>
+              <a onClick={() => {handleLogout()}} >Logout</a>
             </li>
           </ul>
         </div>

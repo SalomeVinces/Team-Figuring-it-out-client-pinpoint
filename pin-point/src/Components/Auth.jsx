@@ -61,7 +61,6 @@ const Auth = ({ updateToken }) => {
 
       updateToken(data.Token, data.User._id);
 
-      // //! NEED TO EDIT THIS
       navigate("/home");
     } catch (err) {
       console.log(err.message);

@@ -43,9 +43,9 @@ function App() {
   return (
     <>
       <div data-theme="forest">
-        <Navbar />
+        <Navbar handleLogout={handleLogout} />
 
-        {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>}
+        {/* {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>} */}
 
         <Routes>
           
@@ -72,6 +72,9 @@ function App() {
           <Route path="/verification" element ={ <Verification/>} />
 
           <Route path ="/survey" element={<Survey/>} />
+          
+          //! NEED TO ADD THIS LATER
+          {/* <Route path ="/account" element={<Account/>} /> */}
 
         </Routes>
 

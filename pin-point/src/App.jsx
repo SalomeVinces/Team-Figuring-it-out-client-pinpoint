@@ -9,6 +9,8 @@ import Home from "./Components/Home"
 import Landing from "./Components/Landing"
 import Verification from './Components/Verification'
 import Survey from './Components/Survey'
+import Account from './Components/Account'
+import Footer from './Components/Footer'
 
 function App() {
   const [token, setToken] = useState("")
@@ -74,9 +76,11 @@ function App() {
           <Route path ="/survey" element={<Survey/>} />
           
           //! NEED TO ADD THIS LATER
-          {/* <Route path ="/account" element={<Account/>} /> */}
+          <Route path ="/account" element={<Account/>} />
 
         </Routes>
+
+        <Footer/>
 
       </div>
     </>

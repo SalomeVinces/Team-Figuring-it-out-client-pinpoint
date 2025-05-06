@@ -53,11 +53,17 @@ const Navbar = ({ token, handleLogout }) => {
               }}>Survey</a>
             </li>
 
-            {!token ? (
-
+            {token ? (
+              <>
+              <li>
+                <a onClick={() => { navigate("/account") }} >Account</a>
+              </li>
               <li>
                 <a onClick={() => { handleLogout() }} >Logout</a>
               </li>
+              
+              </>
+
             ) : (
               <li>
                 <a onClick={() => { navigate("/auth") }} >Signup</a>

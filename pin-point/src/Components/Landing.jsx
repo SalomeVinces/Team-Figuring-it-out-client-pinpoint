@@ -10,7 +10,7 @@ const Landing = ({handleNavigation}) => {
 
 
     return (
-        <div>
+        <div className='page'>
             <h1>Landing Page</h1>
             {/* //!Place holder for description for landing page */}
             <p>Welcome to landing page!</p>

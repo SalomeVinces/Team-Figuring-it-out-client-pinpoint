@@ -1,6 +1,6 @@
-body{
+/* body{
     background-color: white;
-}
+} */
 /* form{
     width: 50%;
     margin: auto;
@@ -10,14 +10,14 @@ body{
     box-shadow: 0 0 4px rgba(0,0,0,0.2);
     margin-top: 100px;
 } */
-input{
+/* input{
     width: 100%;
     padding: 15px;
     border: 1px solid #eee;
     outline: none;
     border-radius: 8px;
     margin-bottom: 20px;
-}
+} */
 /* 
 button{
     padding: 15px 25px;

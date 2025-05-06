@@ -19,7 +19,7 @@ const Auth = ({ updateToken }) => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
     console.log(urlParams.get("login"));
-    if (urlParams.get("login")){
+    if (urlParams.get("login")) {
       setSignup(false)
     }
   }, [])
@@ -51,7 +51,7 @@ const Auth = ({ updateToken }) => {
           }),
         }
       );
-      
+
       // Get the response as JSON
       const data = await response.json();
 
@@ -68,35 +68,34 @@ const Auth = ({ updateToken }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-
-      <h2>{signup ? "Signup" : "Login"}</h2>
-
+    <div className="page text-center">
+      <h2 className="my-2">{signup ? "Signup" : "Login"}</h2>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5 justify-center items-center pb-4 ">
       {signup && (
-        <>
 
-          <input ref={firstNameRef} placeholder="First Name" required />{" "}
-          <input ref={lastNameRef} placeholder="Last Name" required />{" "}
+        <>
+          <input className="input input-accent" ref={firstNameRef} placeholder="First Name" required />{" "}
+          <input className="input input-accent" ref={lastNameRef} placeholder="Last Name" required />{" "}
           {/* <input ref={dateOfBirthRef} placeholder="Date of Birth" required />{" "} */}
-          <input ref={dateOfBirthRef} placeholder="Date of Birth" required type= "date"/>{" "}
-          <input ref={zipCodeRef} placeholder="Zip Code" />{" "}
+          <input className="input input-accent" ref={dateOfBirthRef} placeholder="Date of Birth" required type="date" />{" "}
+          <input className="input input-accent" ref={zipCodeRef} placeholder="Zip Code" />{" "}
         </>
       )}
 
-      <input ref={emailRef} placeholder="Email" required />
-      <input ref={passwordRef} placeholder="Password" required />{" "}
+      <input className="input input-accent" ref={emailRef} placeholder="Email" required />
+      <input className="input input-accent" ref={passwordRef} placeholder="Password" required />{" "}
       <button>Submit</button> {/* Submit button */}
-      <button
+      <button 
         type="button"
         onClick={() => {
           // When clicked, toggle the "signup" state to switch between signup and login
           setSignup(!signup);
         }}
       >
-
         {signup ? "Need to login?" : "Need to signup?"}
       </button>
     </form>
+    </div>
   );
 };
 

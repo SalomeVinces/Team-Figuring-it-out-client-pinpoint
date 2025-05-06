@@ -2,7 +2,7 @@ import React from 'react'
 
 const Survey = () => {
     return (
-        <>
+        <div className='page'>
             <div>Tell us about yourself...</div>
             <div className="dropdown">
                 <div tabIndex={0} role="button" className="btn m-1">Click</div>
@@ -13,7 +13,7 @@ const Survey = () => {
             </div>
 
 
-        </>
+        </div>
 
     )
 }

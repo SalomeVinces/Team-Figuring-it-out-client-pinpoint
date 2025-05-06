@@ -77,6 +77,6 @@ button:focus-visible {
 @plugin "daisyui/theme" {
   name: "forest"; /** Custom theme name or target an internal theme to override */
   default: true;
-  --color-primary: blue;
+  /* --color-primary: blue; */
   
 }

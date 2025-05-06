@@ -42,8 +42,8 @@ function App() {
 
   return (
     <>
-      <div data-theme="forest">
-        <Navbar handleLogout={handleLogout} />
+      <div data-theme="retro"> 
+        <Navbar token={token} handleLogout={handleLogout} />
 
         {/* {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>} */}
 

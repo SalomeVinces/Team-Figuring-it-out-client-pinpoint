@@ -2,11 +2,11 @@ import React from "react";
 import "./Components-css/Navbar.css";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = ( {handleNavigation, handleLogout} ) => {
+const Navbar = ({ token, handleLogout }) => {
   const navigate = useNavigate()
 
   return (
-    <div className="navbar bg-base-100 shadow-sm bg-primary">
+    <div className="navbar bg-base-300 shadow-sm ">
       <div className="navbar-start">
         {/*  logo */}
         <a className="ghost text-xl">PinPoint</a>
@@ -39,21 +39,32 @@ const Navbar = ( {handleNavigation, handleLogout} ) => {
               <a onClick={() => {
                 navigate("/account")}}>Account</a>
             </li> */}
-            
+
             <li>
               <a onClick={() => {
-                navigate("/home")}}>Homepage</a>
+
+                navigate("/home")
+              }}>Homepage</a>
             </li>
-            
+
             <li>
               <a onClick={() => {
-                navigate("/survey")}}>Survey</a>
+                navigate("/survey")
+              }}>Survey</a>
             </li>
-            
-            {/* //! Edit so logout displays when user is already signed in */}
-            <li>
-              <a onClick={() => {handleLogout()}} >Logout</a>
-            </li>
+
+            {!token ? (
+
+              <li>
+                <a onClick={() => { handleLogout() }} >Logout</a>
+              </li>
+            ) : (
+              <li>
+                <a onClick={() => { navigate("/auth") }} >Signup</a>
+              </li>
+            )
+
+            }
           </ul>
         </div>
       </div>

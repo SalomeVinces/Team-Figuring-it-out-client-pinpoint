@@ -9,7 +9,7 @@ const Navbar = ({ token, handleLogout }) => {
     <div className="navbar bg-base-300 shadow-sm ">
       <div className="navbar-start">
         {/*  logo */}
-        <a className="ghost text-xl">PinPoint</a>
+        <a className="ghost text-2xl text-black">PinPoint</a>
       </div>
       {/* navebar */}
       <div className="navbar-end">
@@ -35,33 +35,24 @@ const Navbar = ({ token, handleLogout }) => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            {/* <li>
-              <a onClick={() => {
-                navigate("/account")}}>Account</a>
-            </li> */}
 
-            <li>
-              <a onClick={() => {
-
-                navigate("/home")
-              }}>Homepage</a>
-            </li>
-
-            <li>
-              <a onClick={() => {
-                navigate("/survey")
-              }}>Survey</a>
-            </li>
 
             {token ? (
               <>
-              <li>
-                <a onClick={() => { navigate("/account") }} >Account</a>
-              </li>
-              <li>
-                <a onClick={() => { handleLogout() }} >Logout</a>
-              </li>
-              
+
+                <li>
+                  <a onClick={() => {
+
+                    navigate("/home")
+                  }}>Homepage</a>
+                </li>
+                <li>
+                  <a onClick={() => { navigate("/account") }} >Account</a>
+                </li>
+                <li>
+                  <a onClick={() => { handleLogout() }} >Logout</a>
+                </li>
+
               </>
 
             ) : (

@@ -39,28 +39,26 @@ const Navbar = ({ token, handleLogout }) => {
 
             {token ? (
               <>
-
                 <li>
                   <a onClick={() => {
 
                     navigate("/home")
                   }}>Homepage</a>
                 </li>
+
                 <li>
                   <a onClick={() => { navigate("/account") }} >Account</a>
                 </li>
+
                 <li>
                   <a onClick={() => { handleLogout() }} >Logout</a>
                 </li>
-
               </>
-
             ) : (
               <li>
                 <a onClick={() => { navigate("/auth") }} >Signup</a>
               </li>
             )
-
             }
           </ul>
         </div>

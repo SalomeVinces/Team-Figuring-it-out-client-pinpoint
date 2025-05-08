@@ -84,7 +84,7 @@ const Auth = ({ updateToken }) => {
 
       <input className="input input-accent" ref={emailRef} placeholder="Email" required />
       <input className="input input-accent" ref={passwordRef} placeholder="Password" required />{" "}
-      <button>Submit</button> {/* Submit button */}
+      <button className="btn btn-accent">Submit</button> {/* Submit button */}
       <button 
         type="button"
         onClick={() => {

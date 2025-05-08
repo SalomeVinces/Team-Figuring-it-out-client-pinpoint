@@ -57,7 +57,7 @@ const Home = () => {
 
 
   return (
-    <div className='page'>
+    <div className='page text-center flex flex-col gap-6'>
       <h1 className='text-3xl font-bold text-primary'>Welcome Home User!</h1>
 
       <div className="flex flex-col md:flex-row gap-4 p-4">
@@ -101,6 +101,7 @@ const Home = () => {
               <div className="stat-actions">
                 {/* <button className="btn btn-xs btn-success"></button> */}
               </div>
+
             </div>
           </div>
         </div>

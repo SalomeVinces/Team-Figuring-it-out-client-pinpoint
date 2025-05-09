@@ -1,3 +1,10 @@
+.tagesschrift-regular {
+  font-family: "Tagesschrift", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 body{
   margin: 0;
   padding: 0;
@@ -36,7 +43,7 @@ body{
   default: false;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: oklch(98% 0.003 247.858);
+  --color-base-100: oklch(100% 0 0);
   --color-base-200: oklch(100% 0 0);
   --color-base-300: oklch(86% 0.022 252.894);
   --color-base-content: oklch(32.437% 0.022 264.182);
@@ -65,9 +72,6 @@ body{
   --depth: 1;
   --noise: 0;
 }
-
-
-
 
 
 .page{

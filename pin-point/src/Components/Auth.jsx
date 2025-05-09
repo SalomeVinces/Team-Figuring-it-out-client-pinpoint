@@ -61,7 +61,7 @@ const Auth = ({ updateToken }) => {
 
       updateToken(data.Token, data.User._id);
 
-      navigate("/home");
+      navigate("/verification");
     } catch (err) {
       console.log(err.message);
     }

@@ -9,7 +9,7 @@ const Navbar = ({ token, handleLogout }) => {
     <div className="navbar bg-base-300 shadow-sm ">
       <div className="navbar-start">
         {/*  logo */}
-        <a className="ghost text-2xl text-black">PinPoint</a>
+        <a className="ghost text-3xl text-black tagesschrift-regular">PinPoint</a>
       </div>
       {/* navebar */}
       <div className="navbar-end">

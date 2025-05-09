@@ -57,7 +57,7 @@ function App() {
                 : (<Navigate to ="/Auth" />)
             } />
 
-          <Route
+          {/* <Route
             path="/Auth"
             element={
               !token ? (
@@ -65,7 +65,14 @@ function App() {
               ) : (
                 <Navigate to="/home" />
               )}
-          />
+          /> */}
+          <Route
+            path="/Auth"
+            element={
+              (
+                <Auth updateToken={updateToken} />
+              ) }
+/>
 
           <Route path='/home' element={<Home />} />
           

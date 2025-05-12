@@ -44,7 +44,7 @@ function App() {
 
   return (
     <>
-      <div data-theme="retro"> 
+      <div data-theme="nord"> 
         <Navbar token={token} handleLogout={handleLogout} />
 
         {/* {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>} */}
@@ -57,7 +57,7 @@ function App() {
                 : (<Navigate to ="/Auth" />)
             } />
 
-          <Route
+          {/* <Route
             path="/Auth"
             element={
               !token ? (
@@ -65,7 +65,14 @@ function App() {
               ) : (
                 <Navigate to="/home" />
               )}
-          />
+          /> */}
+          <Route
+            path="/Auth"
+            element={
+              (
+                <Auth updateToken={updateToken} />
+              ) }
+/>
 
           <Route path='/home' element={<Home />} />
           

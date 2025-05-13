@@ -34,9 +34,10 @@ const Landing = ({ handleNavigation }) => {
     });
 
     return (
-        <div className='page text-center flex justify-center flex-col items-center gap-4 bg- bg-neutral-content '>
-            <h1>Welcome to Pinpoint</h1>
+        <div className='page text-center flex justify-center flex-col items-center gap-4'>
+            {/* //!Place holder for wide PinPoint Image for landing page */}
             {/* //!Place holder for description for landing page */}
+            <h1>Welcome to Pinpoint</h1>
 
             <div className='space-x-2'>
                 <button className='btn btn-accent' onClick={() => handleNavigation("/Auth")} >Signup</button>

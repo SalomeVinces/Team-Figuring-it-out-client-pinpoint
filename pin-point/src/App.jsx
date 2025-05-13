@@ -14,6 +14,7 @@ import Footer from './Components/Footer'
 
 function App() {
   const [token, setToken] = useState("")
+  const [uid, setUid] = useState("")
   const navigate = useNavigate()
 
   // Update state token variable, and store it in localStorage
@@ -21,6 +22,7 @@ function App() {
     localStorage.setItem("token", passedToken);
     localStorage.setItem("uid", uid);
     setToken(passedToken);
+    setUid(uid)
   }
 
   // Logout handler
@@ -28,6 +30,7 @@ function App() {
     localStorage.removeItem("token");
     localStorage.removeItem("uid");
     setToken("");
+    setUid("")
     navigate("/")
   }
 
@@ -37,24 +40,31 @@ function App() {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+    const storedUid = localStorage.getItem("uid")
+
     if (storedToken) {
       setToken(storedToken);
     }
+
+    if (storedUid) {
+      setUid(storedUid);
+    }
+
   }, [])
 
   return (
     <>
-      <div data-theme="nord"> 
+      <div data-theme="nord">
         <Navbar token={token} handleLogout={handleLogout} />
 
         {/* {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>} */}
 
         <Routes>
-          
+
           <Route path='/'
             element={
               !token ? <Landing handleNavigation={handleNavigation} />
-                : (<Navigate to ="/Auth" />)
+                : (<Navigate to="/Auth" />)
             } />
 
           {/* <Route
@@ -71,23 +81,26 @@ function App() {
             element={
               (
                 <Auth updateToken={updateToken} />
-              ) }
-/>
+              )}
+          />
 
-          <Route path='/home' element={<Home />} />
-          
+          {token ? (
+            <Route path="/home" element={<Home token={token} uid={uid} />} />
+          ) : (
+            <Route path="/home" element={<Navigate to="/auth" />} />
+          )}
+
           {/* Verify routes once verification backend is connected and verify survey route */}
-          
-          <Route path="/verification" element ={ <Verification/>} />
+          <Route path="/verification" element={<Verification />} />
 
-          <Route path ="/survey" element={<Survey/>} />
-          
+          <Route path="/survey" element={<Survey />} />
+
           //! NEED TO ADD THIS LATER
-          <Route path ="/account" element={<Account/>} />
+          <Route path="/account" element={<Account />} />
 
         </Routes>
 
-        <Footer/>
+        <Footer />
 
       </div>
     </>

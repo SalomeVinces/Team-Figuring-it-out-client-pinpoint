@@ -12,7 +12,7 @@ const Verification = () => {
 
     try {
 
-     
+
 
       navigate("/survey");
     } catch (err) {

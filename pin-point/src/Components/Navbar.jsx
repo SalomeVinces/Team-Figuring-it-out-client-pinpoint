@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Components-css/Navbar.css";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ token, handleLogout }) => {
+  const [hideAuth, setHideAuth]=useState(false)
   const navigate = useNavigate()
+  useEffect(() =>{
+    if(window.location.pathname.includes("/auth")){
+      setHideAuth(true)
+    }
+  },[])
 
   return (
+
     <div className="navbar bg-base-300 shadow-sm ">
       <div className="navbar-start">
         {/*  logo */}
@@ -54,9 +61,9 @@ const Navbar = ({ token, handleLogout }) => {
                   <a onClick={() => { handleLogout() }} >Logout</a>
                 </li>
               </>
-            ) : (
+            ) : ( hideAuth ? null : 
               <li>
-                <a onClick={() => { navigate("/auth") }} >Signup</a>
+                <a onClick={() => { navigate("/auth") }} >Signup/Login</a>
               </li>
             )
             }

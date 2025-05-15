@@ -63,8 +63,7 @@ function App() {
 
           <Route path='/'
             element={
-              !token ? <Landing handleNavigation={handleNavigation} />
-                : (<Navigate to="/Auth" />)
+           <Landing handleNavigation={handleNavigation} />
             } />
 
           {/* <Route

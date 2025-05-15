@@ -34,3 +34,7 @@ npm start
 
 - React.js
 - UI libraries such as Material UI, Tailwind CSS, etc.
+
+## 🧠 Authors & Credits
+
+Created by the **Pinpoint Team** – as part of a civic tech initiative to make legislative education accessible and user-focused.

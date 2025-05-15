@@ -40,11 +40,11 @@ const Landing = ({ handleNavigation }) => {
             <h1>Welcome to Pinpoint</h1>
 
             <div className='space-x-2'>
-                <button className='btn btn-primary' onClick={() => handleNavigation("/Auth")} >Signup</button>
-                <button className='btn btn-primary' onClick={() => handleNavigation("/Auth?login=true")} >Login</button>
+                <button className='btn btn-accent' onClick={() => handleNavigation("/Auth")} >Signup</button>
+                <button className='btn btn-accent' onClick={() => handleNavigation("/Auth?login=true")} >Login</button>
             </div>
 
-            <select className="select select-bordered w-64" value={selectedValue} onChange={handleChange}>
+            <select className="select select-bordered w-64 bg-" value={selectedValue} onChange={handleChange}>
                 <option value="">-- Select a State --</option>
                 {states.map((s) => (
                     <option key={s.value} value={s.value}>
@@ -53,16 +53,16 @@ const Landing = ({ handleNavigation }) => {
                 ))}
             </select>
 
-            <div className="flex flex-col md:flex-row justify-center gap-6 mt-4 w-full max-w-7xl">
+            <div className="flex flex-col md:flex-row justify-center gap-6 mt-4 w-full max-w-7xl ">
                 
             {/* Bills Section */}
-                <div className="flex-1 bg-base-100 shadow-md p-4 border rounded">
-                    <h2 className="text-lg font-semibold mb-2">Bills</h2>
+                <div className="flex-1 bg-base-100 shadow-md p-4 border rounded bg-secondary ">
+                    <h2 className="text-lg font-semibold mb-2 ">Bills</h2>
                     {loading ? <p>Loading...</p> :
                         bills.map((bill) => (
-                            <div key={bill.id} className="border p-3 my-2 rounded shadow-sm text-left">
+                            <div key={bill.id} className="border p-3 my-2 rounded shadow-sm text-left bg-white">
                                 <h3 className="font-bold text-lg">{bill.title}</h3>
-                                <p className="text-sm text-gray-700">Bill ID: {bill.identifier}</p>
+                                <p className="text-sm text-gray-700 ">Bill ID: {bill.identifier}</p>
                                 <p className="text-sm text-gray-700">
                                     Latest Action Date: {bill.latest_action_date ? new Date(bill.latest_action_date).toLocaleDateString() : "N/A"}
                                 </p>
@@ -72,21 +72,21 @@ const Landing = ({ handleNavigation }) => {
                 </div>
 
             {/* Officials Section */}
-                <div className="flex-1 bg-base-100 shadow-md p-4 border rounded">
-                    <h2 className="text-lg font-semibold mb-2">Officials</h2>
+                <div className="flex-1 bg-base-100 shadow-md p-4 border rounded bg-secondary ">
+                    <h2 className="text-lg font-semibold mb-2 ">Officials</h2>
                     {loading ? <p>Loading...</p> :
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
                             {sortedOfficials.map((o) => (
-                                <div key={o.id} className="border p-3 rounded shadow-sm text-left flex gap-4 items-start">
+                                <div key={o.id} className="border p-3 rounded shadow-sm text-left flex gap-4 items-start bg-white ">
                                     {o.image && (
                                         <img
                                             src={o.image}
                                             alt={`${o.name} portrait`}
-                                            className="w-16 h-16 object-cover rounded"
+                                            className="w-16 h-16 object-cover rounded "
                                         />
                                     )}
                                     <div>
-                                        <h3 className="font-bold">{o.name}</h3>
+                                        <h3 className="font-bold ">{o.name}</h3>
                                         <p>{o.current_role?.title} - District {o.current_role?.district || "N/A"}</p>
                                         <p>Party: {o.party || 'N/A'}</p>
                                         {o.email && (

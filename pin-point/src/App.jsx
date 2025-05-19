@@ -6,8 +6,8 @@ import Navbar from './Components/Navbar'
 import Auth from "./Components/Auth"
 import Home from "./Components/Home"
 import Landing from "./Components/Landing"
-import Verification from './Components/Verification'
-import Survey from './Components/Survey'
+// import Verification from './Components/Verification'
+// import Survey from './Components/Survey'
 import Account from './Components/Account'
 import Footer from './Components/Footer'
 
@@ -48,7 +48,7 @@ function App() {
   }, [])
 
   return (
-    <div data-theme="nord">
+    <div data-theme="nord" style={{ display: "flex", flexDirection: 'column', minHeight: "100dvh", justifyContent: "space-between" }}>
       <Navbar token={token} handleLogout={handleLogout} />
 
       <Routes>
@@ -81,10 +81,10 @@ function App() {
         />
 
         {/* Verification - Optional gated flow */}
-        <Route path="/verification" element={<Verification />} />
+        {/* <Route path="/verification" element={<Verification />} /> */}
 
         {/* Survey - Optional gated flow */}
-        <Route path="/survey" element={<Survey />} />
+        {/* <Route path="/survey" element={<Survey />} /> */}
 
         {/* Account - Allow only if logged in */}
         <Route

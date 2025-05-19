@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Components-css/Navbar.css";
 import { useNavigate } from "react-router-dom";
+import pinpointLogo from "../assets/PinPoint.png"
 
 const Navbar = ({ token, handleLogout }) => {
   const [hideAuth, setHideAuth]=useState(false)
@@ -16,6 +17,7 @@ const Navbar = ({ token, handleLogout }) => {
     <div className="navbar bg-base-300 shadow-sm ">
       <div className="navbar-start">
         {/*  logo */}
+        <img src={pinpointLogo} alt="Pinpoint Icon" className="w-24 h-24 mb-4 rounded-full" />
         <a className="ghost text-3xl text-black tagesschrift-regular">PinPoint</a>
       </div>
       {/* navebar */}

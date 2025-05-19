@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 
 import './App.css'
@@ -17,66 +16,93 @@ function App() {
   const [uid, setUid] = useState("")
   const navigate = useNavigate()
 
-  // Update state token variable, and store it in localStorage
-  const updateToken = (passedToken, uid) => {
-    localStorage.setItem("token", passedToken);
-    localStorage.setItem("uid", uid);
-    setToken(passedToken);
-    setUid(uid)
+  // Update state and localStorage with token + uid after login/signup
+  const updateToken = (passedToken, passedUid) => {
+    localStorage.setItem("token", passedToken)
+    localStorage.setItem("uid", passedUid)
+    setToken(passedToken)
+    setUid(passedUid)
   }
 
-  // Logout handler
+  // Clear session and navigate home
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("uid");
-    setToken("");
+    localStorage.removeItem("token")
+    localStorage.removeItem("uid")
+    setToken("")
     setUid("")
     navigate("/")
   }
 
+  // Navigate programmatically from components like Landing
   const handleNavigation = (route) => {
     navigate(route)
-  };
+  }
 
+  // Load token and uid from storage on page refresh
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = localStorage.getItem("token")
     const storedUid = localStorage.getItem("uid")
 
-    if (storedToken) {
-      setToken(storedToken);
-    }
-
-    if (storedUid) {
-      setUid(storedUid);
-    }
-
+    if (storedToken) setToken(storedToken)
+    if (storedUid) setUid(storedUid)
   }, [])
 
   return (
-    <>
-      <div data-theme="nord" style={{ display: "flex", flexDirection: 'column', minHeight: "100dvh", justifyContent: "space-between" }}>
-        <Navbar token={token} handleLogout={handleLogout} />
+    <div data-theme="nord" style={{ display: "flex", flexDirection: 'column', minHeight: "100dvh", justifyContent: "space-between" }}>
+      <Navbar token={token} handleLogout={handleLogout} />
 
-        <Routes>
-          
-          <Route path='/' element={!token ? <Landing handleNavigation={navigate} /> : <Navigate to="/home" />} />
+      <Routes>
 
-          <Route path='/auth' element={!token ? <Auth updateToken={updateToken} /> : <Navigate to="/home" />} />
+        {/* Landing Page - Always accessible */}
+        <Route path="/" element={<Landing handleNavigation={handleNavigation} />} />
 
-            {/* ? */}
-          {/* <Route path="/verification" element={<Verification />} /> */}
-          {/* <Route path="/survey" element={<Survey />} /> */}
+        {/* Auth Route - Redirect to /home if already logged in */}
+        <Route
+          path="/auth"
+          element={
+            token ? (
+              <Navigate to="/home" />
+            ) : (
+              <Auth updateToken={updateToken} />
+            )
+          }
+        />
 
-          <Route path="/home" element={<Home token={token} uid={uid} />} />
-          <Route path="/account" element={<Account />} />
+        {/* Home Route - Redirect to /auth if NOT logged in */}
+        <Route
+          path="/home"
+          element={
+            token ? (
+              <Home token={token} uid={uid} />
+            ) : (
+              <Navigate to="/auth" />
+            )
+          }
+        />
 
-        </Routes>
+        {/* Verification - Optional gated flow */}
+        {/* <Route path="/verification" element={<Verification />} /> */}
 
-        <Footer />
+        {/* Survey - Optional gated flow */}
+        {/* <Route path="/survey" element={<Survey />} /> */}
 
-      </div>
-    </>
+        {/* Account - Allow only if logged in */}
+        <Route
+          path="/account"
+          element={
+            token ? (
+              <Account token={token} uid={uid} />
+            ) : (
+              <Navigate to="/auth" />
+            )
+          }
+        />
+
+      </Routes>
+
+      <Footer />
+    </div>
   )
-};
+}
 
-export default App;
+export default App

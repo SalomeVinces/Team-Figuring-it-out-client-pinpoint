@@ -34,11 +34,37 @@ const Landing = ({ handleNavigation }) => {
     });
 
     return (
-        <div className='page text-center flex justify-center flex-col items-center gap-4'>
+        <div className='page text-center flex justify-center flex-col items-center gap-5 m-3 min-h-screenrounded '>
+        {/* // <div className='page text-center flex justify-center flex-col items-center gap-3 m-1'> */}
             {/* //!Place holder for wide PinPoint Image for landing page */}
             {/* //!Place holder for description for landing page */}
-            <h1>Welcome to Pinpoint</h1>
+            {/* <h1>Welcome to Pinpoint</h1> */}
 
+            {/* text */}
+  
+<div className="card bg-base-500  w-full h-[300px] ">
+
+  <figure>
+    <img
+      src="https://media.istockphoto.com/id/1367415304/photo/the-united-states-capitol-often-called-the-capitol-building-is-the-home-of-the-united-states.jpg?s=1024x1024&w=is&k=20&c=1wBEJdevqK9-OOcIYfOnZYjxcacCuPK2W_-6AgjVgtY="
+      alt=""
+      className="w-full h-full "
+    />
+  </figure>
+
+  {/* Texte centré sur l'image */}
+  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-3">
+    <h1 className="text-5xl font-bold"> Pinpoint</h1>
+    <p className="text-center leading-relaxed  font-medium max-w-3xl mx-auto rounded text-3xl font-bold">
+     Pinpoint makes your work easier.
+ Find the information you need, organize your tasks, and gain clarity.
+ Everything becomes faster, simpler, and more efficient.
+  </p>
+  </div>
+</div>
+
+
+{/*   */}
             <div className='space-x-2'>
                 <button className='btn btn-accent' onClick={() => handleNavigation("/Auth")} >Signup</button>
                 <button className='btn btn-accent' onClick={() => handleNavigation("/Auth?login=true")} >Login</button>

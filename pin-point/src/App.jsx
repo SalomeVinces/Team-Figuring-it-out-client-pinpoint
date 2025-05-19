@@ -7,8 +7,8 @@ import Navbar from './Components/Navbar'
 import Auth from "./Components/Auth"
 import Home from "./Components/Home"
 import Landing from "./Components/Landing"
-import Verification from './Components/Verification'
-import Survey from './Components/Survey'
+// import Verification from './Components/Verification'
+// import Survey from './Components/Survey'
 import Account from './Components/Account'
 import Footer from './Components/Footer'
 
@@ -54,47 +54,20 @@ function App() {
 
   return (
     <>
-      <div data-theme="nord">
+      <div data-theme="nord" style={{ display: "flex", flexDirection: 'column', minHeight: "100dvh", justifyContent: "space-between" }}>
         <Navbar token={token} handleLogout={handleLogout} />
 
-        {/* {token && <button style={{ position: "absolute", top: 0, right: 0 }} onClick={handleLogout}>Logout</button>} */}
-
         <Routes>
+          
+          <Route path='/' element={!token ? <Landing handleNavigation={navigate} /> : <Navigate to="/home" />} />
 
-          <Route path='/'
-            element={
-           <Landing handleNavigation={handleNavigation} />
-            } />
+          <Route path='/auth' element={!token ? <Auth updateToken={updateToken} /> : <Navigate to="/home" />} />
 
-          {/* <Route
-            path="/Auth"
-            element={
-              !token ? (
-                <Auth updateToken={updateToken} />
-              ) : (
-                <Navigate to="/home" />
-              )}
-          /> */}
-          <Route
-            path="/Auth"
-            element={
-              (
-                <Auth updateToken={updateToken} />
-              )}
-          />
+            {/* ? */}
+          {/* <Route path="/verification" element={<Verification />} /> */}
+          {/* <Route path="/survey" element={<Survey />} /> */}
 
-          {token ? (
-            <Route path="/home" element={<Home token={token} uid={uid} />} />
-          ) : (
-            <Route path="/home" element={<Navigate to="/auth" />} />
-          )}
-
-          {/* Verify routes once verification backend is connected and verify survey route */}
-          <Route path="/verification" element={<Verification />} />
-
-          <Route path="/survey" element={<Survey />} />
-
-          //! NEED TO ADD THIS LATER
+          <Route path="/home" element={<Home token={token} uid={uid} />} />
           <Route path="/account" element={<Account />} />
 
         </Routes>

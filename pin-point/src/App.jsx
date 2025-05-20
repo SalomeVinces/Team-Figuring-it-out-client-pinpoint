@@ -35,6 +35,7 @@ function App() {
 
   // Navigate programmatically from components like Landing
   const handleNavigation = (route) => {
+    console.log("button clicked");
     navigate(route)
   }
 

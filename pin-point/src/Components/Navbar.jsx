@@ -17,8 +17,8 @@ const Navbar = ({ token, handleLogout }) => {
     <div className="navbar bg-base-300 shadow-sm ">
       <div className="navbar-start">
         {/*  logo */}
-        <img src={pinpointLogo} alt="Pinpoint Icon" className="w-24 h-24 mb-4 rounded-full" />
-        <a className="ghost text-3xl text-black tagesschrift-regular">PinPoint</a>
+        <img src={pinpointLogo} alt="Pinpoint Icon" className="w-15 h-15 rounded-full scale-125" />
+        {/* <a className="ghost text-3xl text-black tagesschrift-regular">PinPoint</a> */}
       </div>
       {/* navebar */}
       <div className="navbar-end">

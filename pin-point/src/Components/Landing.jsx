@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { states } from '../utils/states.js'
+import landingBg from "../assets/LandingBg2.jpg"
+import pin3 from "../assets/Pin3.png"
 
 const Landing = ({ handleNavigation }) => {
     const [selectedValue, setSelectedValue] = useState('');
@@ -34,40 +36,41 @@ const Landing = ({ handleNavigation }) => {
     });
 
     return (
-        <div className='page text-center flex justify-center flex-col items-center gap-5 m-3 min-h-screenrounded '>
-        {/* // <div className='page text-center flex justify-center flex-col items-center gap-3 m-1'> */}
+        <div className='page text-center flex justify-center flex-col items-center gap-5 pb-4 min-h-screenrounded' style={{background:"#5F717A"}}>
+            {/* // <div className='page text-center flex justify-center flex-col items-center gap-3 m-1'> */}
             {/* //!Place holder for wide PinPoint Image for landing page */}
             {/* //!Place holder for description for landing page */}
             {/* <h1>Welcome to Pinpoint</h1> */}
 
             {/* text */}
-  
-<div className="card bg-base-500  w-full h-[300px] ">
 
-  <figure>
-    <img
-      src="https://media.istockphoto.com/id/1367415304/photo/the-united-states-capitol-often-called-the-capitol-building-is-the-home-of-the-united-states.jpg?s=1024x1024&w=is&k=20&c=1wBEJdevqK9-OOcIYfOnZYjxcacCuPK2W_-6AgjVgtY="
-      alt=""
-      className="w-full h-full "
-    />
-  </figure>
+            <div className="card bg-base-500   ">
 
-  {/* Texte centré sur l'image */}
-  <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-3">
-    <h1 className="text-5xl font-bold"> Pinpoint</h1>
-    <p className="text-center leading-relaxed  font-medium max-w-3xl mx-auto rounded text-3xl font-bold">
-     Pinpoint makes your work easier.
- Find the information you need, organize your tasks, and gain clarity.
- Everything becomes faster, simpler, and more efficient.
-  </p>
-  </div>
-</div>
+                <div>
+                    <div className='space-x-2 absolute bottom-3 right-8 z-10'>
+                        <button className='btn btn-accent' onClick={() => {
+                            console.log("signup was clicked");
+                            handleNavigation("/Auth")
+                            }} >Signup</button>
+                        <button className='btn btn-accent' onClick={() => handleNavigation("/Auth?login=true")} >Login</button>
+                    </div>
+                    <img
+                        src={landingBg}
+                        className=" "
+                        style={{height:"80vh",  width:"100vw", objectFit:"cover"}}
+                    />
+                </div>
 
-
-{/*   */}
-            <div className='space-x-2'>
-                <button className='btn btn-accent' onClick={() => handleNavigation("/Auth")} >Signup</button>
-                <button className='btn btn-accent' onClick={() => handleNavigation("/Auth?login=true")} >Login</button>
+                {/* Center image */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white text-shadow-sm px-3">
+                    <h1 className="text-7xl font-bold text-shadow-lg/20 mb-5 tagesschrift-regular"> Pinpoint</h1>
+                    <div style={{background:"rgba(0,0,0,.6)"}}>
+                    <p className="text-center leading-relaxed font-medium max-w-3xl mx-auto rounded text-xl text-shadow-lg/20 p-8  ">
+                        Pinpoint makes your work easier. Find the information you need, organize your tasks, and gain clarity.
+                        Everything becomes faster, simpler, and more efficient.
+                    </p>
+                    </div>
+                </div>
             </div>
 
             <select className="select select-bordered w-64 bg-" value={selectedValue} onChange={handleChange}>
@@ -80,14 +83,17 @@ const Landing = ({ handleNavigation }) => {
             </select>
 
             <div className="flex flex-col md:flex-row justify-center gap-6 mt-4 w-full max-w-7xl ">
-                
-            {/* Bills Section */}
-                <div className="flex-1 bg-base-100 shadow-md p-4 border rounded bg-secondary ">
-                    <h2 className="text-lg font-semibold mb-2 ">Bills</h2>
+
+                {/* Bills Section */}
+                <div className="flex-1 shadow-md p-4 border rounded " style={{background:"#415E6C"}}>
+                    <h2 className="text-lg font-semibold mb-2 text-white">Bills</h2>
                     {loading ? <p>Loading...</p> :
                         bills.map((bill) => (
                             <div key={bill.id} className="border p-3 my-2 rounded shadow-sm text-left bg-white">
-                                <h3 className="font-bold text-lg">{bill.title}</h3>
+                                <div className='flex '>
+                                 <img src={pin3} style={{minHeight:"2em", minWidth:"1.5em", maxWidth:"1.5em", maxHeight:"2em"}}/>   
+                                <h3 className="font-semibold text-md">{bill.title}</h3>
+                                </div>
                                 <p className="text-sm text-gray-700 ">Bill ID: {bill.identifier}</p>
                                 <p className="text-sm text-gray-700">
                                     Latest Action Date: {bill.latest_action_date ? new Date(bill.latest_action_date).toLocaleDateString() : "N/A"}
@@ -97,9 +103,9 @@ const Landing = ({ handleNavigation }) => {
                     }
                 </div>
 
-            {/* Officials Section */}
-                <div className="flex-1 bg-base-100 shadow-md p-4 border rounded bg-secondary ">
-                    <h2 className="text-lg font-semibold mb-2 ">Officials</h2>
+                {/* Officials Section */}
+                <div className="flex-1  shadow-md p-4 border rounded"style={{background:"#415E6C"}} >
+                    <h2 className="text-lg font-semibold mb-2 text-white">Officials</h2>
                     {loading ? <p>Loading...</p> :
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
                             {sortedOfficials.map((o) => (
@@ -117,7 +123,7 @@ const Landing = ({ handleNavigation }) => {
                                         <p>Party: {o.party || 'N/A'}</p>
                                         {o.email && (
                                             <p>
-                                                <a href={`mailto:${o.email}`} className="text-blue-600 underline">
+                                                <a style={{fontSize: o.email.length > 25 ? ".6em" : null }}   href={`mailto:${o.email}`} className={`text-blue-600 underline`}>
                                                     {o.email}
                                                 </a>
                                             </p>

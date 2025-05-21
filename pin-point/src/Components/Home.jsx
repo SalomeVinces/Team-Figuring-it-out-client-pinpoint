@@ -160,7 +160,7 @@ const Home = ({ token, uid }) => {
       <div className="flex flex-col md:flex-row gap-4 p-4">
         <div className="flex-1 overflow-auto border rounded bg-base-300 p-4">
           <h2 className="text-lg font-semibold mb-2">Officials</h2>
-          <div className="flex flex-wrap gap-3 mb-4 text-left">
+          <div className="flex flex-wrap gap-3 mb-4 text-left ">
             <select className="select select-bordered" value={officialParty} onChange={(e) => setOfficialParty(e.target.value)}>
               <option value="">All Parties</option>
               <option value="Democratic">Democratic</option>
@@ -179,7 +179,7 @@ const Home = ({ token, uid }) => {
             <>
               <div className="flex flex-col gap-4">
                 {currentOfficials.map((o) => (
-                  <div key={o.id} className="p-3 border rounded shadow-sm flex gap-4 items-center">
+                  <div key={o.id} className="p-3 border rounded shadow-sm flex gap-4 items-center bg-white">
                     {o.image && <img src={o.image} alt={o.name} className="w-16 h-16 object-cover rounded" />}
                     <div className="text-left">
                       <h3 className="font-bold">{o.name}</h3>
@@ -223,7 +223,7 @@ const Home = ({ token, uid }) => {
             <p>No bills found.</p>
           ) : (
             <>
-              <ul className="list-disc list-inside text-left space-y-2">
+              <ul className="list-disc list-inside text-left space-y-2 bg-white p-3 border rounded  ">
                 {filteredBills.slice(0, MAX_DISPLAYED_BILLS).map((bill) => (
                   <li key={bill.id}>
                     <strong>{bill.title}</strong><br />

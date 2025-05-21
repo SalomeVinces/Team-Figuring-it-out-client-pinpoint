@@ -23,7 +23,7 @@ const Home = ({ token, uid }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedChamber, setSelectedChamber] = useState("");
 
-  
+
   const [filteredBills, setFilteredBills] = useState([]);
   const [loadingBills, setLoadingBills] = useState(false);
   const MAX_DISPLAYED_BILLS = 3;
@@ -119,7 +119,7 @@ const Home = ({ token, uid }) => {
         if (stateCode) url.searchParams.append("jurisdiction", stateCode);
         if (term) url.searchParams.append("q", term);
         if (selectedChamber) url.searchParams.append("chamber", selectedChamber);
-        
+
 
         const res = await fetch(url.toString());
         const data = await res.json();
@@ -153,14 +153,14 @@ const Home = ({ token, uid }) => {
   const totalBillPages = Math.ceil(bills.length / billsPerPage);
 
   return (
-    <div className='page text-center flex flex-col gap-6'>
-      <h1 className='text-3xl font-bold text-primary'>
+    <div className='page text-center flex flex-col gap-6 ' style={{ background: "#5F717A" }}>
+      <h1 className='text-3xl font-bold text-white'>
         {user ? `Welcome Home, ${capitalizeFirst(user.firstName)}!` : "Welcome Home"}
       </h1>
       <div className="flex flex-col md:flex-row gap-4 p-4">
         <div className="flex-1 overflow-auto border rounded bg-base-300 p-4">
-          <h2 className="text-lg font-semibold mb-2">Officials</h2>
-          <div className="flex flex-wrap gap-3 mb-4 text-left ">
+          <h2 className="text-lg font-semibold mb-2 ">Officials</h2>
+          <div className="flex flex-wrap gap-3 mb-4 text-left">
             <select className="select select-bordered" value={officialParty} onChange={(e) => setOfficialParty(e.target.value)}>
               <option value="">All Parties</option>
               <option value="Democratic">Democratic</option>
@@ -213,7 +213,7 @@ const Home = ({ token, uid }) => {
               <option value="House">House</option>
               <option value="Senate">Senate</option>
             </select>
-            
+
             <button className="btn btn-primary" onClick={handleSearch}>Search</button>
           </div>
 

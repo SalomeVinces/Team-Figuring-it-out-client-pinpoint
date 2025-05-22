@@ -72,8 +72,8 @@ const Account = ({ token, uid }) => {
     };
 
     return (
-        <div className='page flex bg-success'>
-            <div className='flex-1 border rounded bg-white my-6 mx-30 px-10'>
+        <div className='page flex flex-1 justify-center' style={{background:"#5F717A"}}>
+            <div className='border-1 rounded  bg-white my-6 mx-30 px-10'>
             <div className='py-4 text-center text-2xl font-bold '>Account Settings</div>
 
             <form onSubmit={handleUpdate} className='flex flex-col justify-center items-center gap-4'>
@@ -83,7 +83,7 @@ const Account = ({ token, uid }) => {
                     value={formData.firstName}
                     placeholder="First Name"
                     onChange={handleChange}
-                    className="input input-success"
+                    className="input input-#8d9c97"
                     required
                 />
                 <input
@@ -92,7 +92,7 @@ const Account = ({ token, uid }) => {
                     value={formData.lastName}
                     placeholder="Last Name"
                     onChange={handleChange}
-                    className="input input-success"
+                    className="input input-#8d9c97"
                     required
                 />
                 <input
@@ -101,7 +101,7 @@ const Account = ({ token, uid }) => {
                     value={formData.email}
                     placeholder="Email"
                     onChange={handleChange}
-                    className="input input-success"
+                    className="input input-#8d9c97"
                     required
                 />
                 <input
@@ -109,7 +109,7 @@ const Account = ({ token, uid }) => {
                     name="dateOfBirth"
                     value={formData.dateOfBirth}
                     onChange={handleChange}
-                    className="input input-success"
+                    className="input input-#8d9c97"
                     required
                 />
                 <input
@@ -118,11 +118,11 @@ const Account = ({ token, uid }) => {
                     value={formData.zipCode}
                     placeholder="ZIP Code"
                     onChange={handleChange}
-                    className="input input-success"
+                    className="input input-#8d9c97"
                     required
                 />
 
-                <button type="submit" className="btn btn-success">Update Account</button>
+                <button type="submit" className="btn text-white" style={{background: "#8d9c97"}}>Update Account</button>
             </form>
             </div>
         </div>

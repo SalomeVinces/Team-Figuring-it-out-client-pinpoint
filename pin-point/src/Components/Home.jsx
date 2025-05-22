@@ -184,7 +184,7 @@ const Home = ({ token, uid }) => {
                 <option value="Senate">Senate</option>
               </select>
 
-              <button className="btn btn-primary" onClick={handleSearch}>Search</button>
+              <button className="btn btn-accent" onClick={handleSearch}>Search</button>
             </div>
 
             {loadingBills ? (

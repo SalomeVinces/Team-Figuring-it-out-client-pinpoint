@@ -144,8 +144,8 @@ const Auth = ({ updateToken }) => {
   };
 
   return (
-    <div className="page flex flex-1 justify-center bg-accent">
-    <div className="text-center border rounded bg-white m-4">
+    <div className="page flex flex-1 justify-center" style={{background:"#5F717A"}}>
+    <div className="text-center border rounded bg-white m-4 ">
       <h2 className="my-2 ">{signup ? "👤Signup" : "👤Login"}</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5 justify-center items-center pb-4 px-7 my-5 mx-7  ">
         {signup && (

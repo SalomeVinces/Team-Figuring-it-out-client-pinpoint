@@ -11,10 +11,10 @@ const Home = ({ token, uid }) => {
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const officialsPerPage = 3;
+  const officialsPerPage = 5;
 
   const [billPage, setBillPage] = useState(1);
-  const billsPerPage = 3;
+  const billsPerPage = 5;
 
   const mapRef = useRef(null);
   const zipLayerRef = useRef(null);
@@ -26,7 +26,7 @@ const Home = ({ token, uid }) => {
 
   const [filteredBills, setFilteredBills] = useState([]);
   const [loadingBills, setLoadingBills] = useState(false);
-  const MAX_DISPLAYED_BILLS = 3;
+  const MAX_DISPLAYED_BILLS = 5;
   const [stateCode, setStateCode] = useState("");
 
   const [officialParty, setOfficialParty] = useState("");
@@ -97,7 +97,10 @@ const Home = ({ token, uid }) => {
       }
       const code = getStateFromZip(userData.zipCode);
       setStateCode(code);
-      if (code) await fetchOpenStatesData(code);
+      if (code) {
+        await fetchOpenStatesData(code);
+        await handleSearch(code);
+      }
       setLoading(false);
     };
     requestAnimationFrame(() => setTimeout(init, 0));
@@ -109,16 +112,20 @@ const Home = ({ token, uid }) => {
     };
   }, [token, uid]);
 
-  const handleSearch = async () => {
+  const handleSearch = async (jurisdictionOverride = stateCode) => {
+    setBillPage(1);
     setLoadingBills(true);
     try {
       const searchTerms = searchTerm.split(",").map(t => t.trim()).filter(Boolean);
       let combinedResults = [];
       for (const term of searchTerms.length ? searchTerms : [""]) {
         const url = new URL("http://localhost:8080/bills");
-        if (stateCode) url.searchParams.append("jurisdiction", stateCode);
+        if (jurisdictionOverride) url.searchParams.append("jurisdiction", jurisdictionOverride);
         if (term) url.searchParams.append("q", term);
-        if (selectedChamber) url.searchParams.append("chamber", selectedChamber);
+        if (selectedChamber) {
+          console.log("Selected Chamber (frontend):", selectedChamber);
+          url.searchParams.append("chamber", selectedChamber);
+        }
 
 
         const res = await fetch(url.toString());
@@ -149,8 +156,8 @@ const Home = ({ token, uid }) => {
 
   const billIndexLast = billPage * billsPerPage;
   const billIndexFirst = billIndexLast - billsPerPage;
-  const currentBills = bills.slice(billIndexFirst, billIndexLast);
-  const totalBillPages = Math.ceil(bills.length / billsPerPage);
+  const currentBills = filteredBills.slice(billIndexFirst, billIndexLast);
+  const totalBillPages = Math.ceil(filteredBills.length / billsPerPage);
 
   return (
     <div className='page text-center flex flex-col gap-6 pb-4' style={{ background: "#5F717A" }}>
@@ -167,7 +174,11 @@ const Home = ({ token, uid }) => {
             <div className="flex flex-wrap gap-3 mb-4 text-left">
               <input type="text" placeholder="Search term" className="input input-bordered" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
 
-              <select className="select select-bordered" value={selectedChamber} onChange={(e) => setSelectedChamber(e.target.value)}>
+              <select
+                className="select select-bordered"
+                value={selectedChamber}
+                onChange={(e) => setSelectedChamber(e.target.value)}
+              >
                 <option value="">All Chambers</option>
                 <option value="House">House</option>
                 <option value="Senate">Senate</option>
@@ -182,8 +193,8 @@ const Home = ({ token, uid }) => {
               <p>No bills found.</p>
             ) : (
               <>
-                <ul className="list-disc list-inside text-left space-y-2 bg-white p-3 border rounded  ">
-                  {filteredBills.slice(0, MAX_DISPLAYED_BILLS).map((bill) => (
+                <ul className="list-disc list-inside text-left space-y-2 bg-white p-3 border rounded">
+                  {currentBills.map((bill) => (
                     <li key={bill.id}>
                       <strong>{bill.title}</strong><br />
                       <a
@@ -197,10 +208,23 @@ const Home = ({ token, uid }) => {
                     </li>
                   ))}
                 </ul>
+
                 <div className="flex justify-center mt-4 gap-2">
-                  <button className="btn btn-sm" disabled={billPage === 1} onClick={() => setBillPage(prev => prev - 1)}>Prev</button>
+                  <button
+                    className="btn btn-sm"
+                    disabled={billPage === 1}
+                    onClick={() => setBillPage(prev => prev - 1)}
+                  >
+                    Prev
+                  </button>
                   <span className="self-center">Page {billPage} of {totalBillPages}</span>
-                  <button className="btn btn-sm" disabled={billPage === totalBillPages} onClick={() => setBillPage(prev => prev + 1)}>Next</button>
+                  <button
+                    className="btn btn-sm"
+                    disabled={billPage === totalBillPages}
+                    onClick={() => setBillPage(prev => prev + 1)}
+                  >
+                    Next
+                  </button>
                 </div>
               </>
             )}

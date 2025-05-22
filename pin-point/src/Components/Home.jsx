@@ -153,98 +153,99 @@ const Home = ({ token, uid }) => {
   const totalBillPages = Math.ceil(bills.length / billsPerPage);
 
   return (
-    <div className='page text-center flex flex-col gap-6 ' style={{ background: "#5F717A" }}>
-      <h1 className='text-3xl font-bold text-white'>
+    <div className='page text-center flex flex-col gap-6 pb-4' style={{ background: "#5F717A" }}>
+      <h1 className='text-3xl font-bold text-white py-4 pb-0'>
         {user ? `Welcome Home, ${capitalizeFirst(user.firstName)}!` : "Welcome Home"}
       </h1>
-      <div className="flex flex-col md:flex-row gap-4 p-4">
-        <div className="flex-1 overflow-auto border rounded bg-base-300 p-4">
-          <h2 className="text-lg font-semibold mb-2 ">Officials</h2>
-          <div className="flex flex-wrap gap-3 mb-4 text-left">
-            <select className="select select-bordered" value={officialParty} onChange={(e) => setOfficialParty(e.target.value)}>
-              <option value="">All Parties</option>
-              <option value="Democratic">Democratic</option>
-              <option value="Republican">Republican</option>
-            </select>
-
-            <select className="select select-bordered" value={officialChamber} onChange={(e) => setOfficialChamber(e.target.value)}>
-              <option value="">All Chambers</option>
-              <option value="Representative">House</option>
-              <option value="Senator">Senate</option>
-            </select>
-          </div>
-          {loading ? <p>Loading...</p> : currentOfficials.length === 0 ? (
-            <p>No officials found.</p>
-          ) : (
-            <>
-              <div className="flex flex-col gap-4">
-                {currentOfficials.map((o) => (
-                  <div key={o.id} className="p-3 border rounded shadow-sm flex gap-4 items-center bg-white">
-                    {o.image && <img src={o.image} alt={o.name} className="w-16 h-16 object-cover rounded" />}
-                    <div className="text-left">
-                      <h3 className="font-bold">{o.name}</h3>
-                      <p>District: {o.current_role?.district || 'N/A'}</p>
-                      <p>Party: {o.party || 'N/A'}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="flex justify-center mt-4 gap-2">
-                <button className="btn btn-sm" disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>Prev</button>
-                <span className="self-center">Page {currentPage} of {totalPages}</span>
-                <button className="btn btn-sm" disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}>Next</button>
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className="flex-1 border rounded bg-base-300 p-4">
-          <h2 className="text-lg font-semibold mb-2">Your District</h2>
+      {/* Map */}
+      <div className='flex flex-row px-4'>
+        <div className="flex-3 border-1 rounded bg-base-300" style={{ background: "#415E6C" }} >
+          <h2 className="text-lg font-semibold mb-2 text-white">Your District</h2>
           <div id="map" style={{ height: '50vh', width: '100%' }}></div>
-        </div>
+          <div className="flex-1 overflow-auto rounded bg-base-300 p-4" style={{ background: "#415E6C" }}>
+            <h2 className="text-lg font-semibold mb-2 text-white">Recent Bills</h2>
+            <div className="flex flex-wrap gap-3 mb-4 text-left">
+              <input type="text" placeholder="Search term" className="input input-bordered" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
 
-        <div className="flex-1 overflow-auto border rounded bg-base-300 p-4">
-          <h2 className="text-lg font-semibold mb-2">Recent Bills</h2>
-          <div className="flex flex-wrap gap-3 mb-4 text-left">
-            <input type="text" placeholder="Search term" className="input input-bordered" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+              <select className="select select-bordered" value={selectedChamber} onChange={(e) => setSelectedChamber(e.target.value)}>
+                <option value="">All Chambers</option>
+                <option value="House">House</option>
+                <option value="Senate">Senate</option>
+              </select>
 
-            <select className="select select-bordered" value={selectedChamber} onChange={(e) => setSelectedChamber(e.target.value)}>
-              <option value="">All Chambers</option>
-              <option value="House">House</option>
-              <option value="Senate">Senate</option>
-            </select>
+              <button className="btn btn-primary" onClick={handleSearch}>Search</button>
+            </div>
 
-            <button className="btn btn-primary" onClick={handleSearch}>Search</button>
+            {loadingBills ? (
+              <p>Loading...</p>
+            ) : filteredBills.length === 0 ? (
+              <p>No bills found.</p>
+            ) : (
+              <>
+                <ul className="list-disc list-inside text-left space-y-2 bg-white p-3 border rounded  ">
+                  {filteredBills.slice(0, MAX_DISPLAYED_BILLS).map((bill) => (
+                    <li key={bill.id}>
+                      <strong>{bill.title}</strong><br />
+                      <a
+                        href={bill.openstates_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 underline text-sm"
+                      >
+                        View Details
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex justify-center mt-4 gap-2">
+                  <button className="btn btn-sm" disabled={billPage === 1} onClick={() => setBillPage(prev => prev - 1)}>Prev</button>
+                  <span className="self-center">Page {billPage} of {totalBillPages}</span>
+                  <button className="btn btn-sm" disabled={billPage === totalBillPages} onClick={() => setBillPage(prev => prev + 1)}>Next</button>
+                </div>
+              </>
+            )}
           </div>
+        </div>
+        <div className="flex flex-col md:flex-row gap-4 px-4">
+          <div className="flex-1 overflow-auto border rounded bg-base-300  basis-55" style={{ background: "#415E6C" }}>
+            <h2 className="text-lg font-semibold mb-2 text-white " >Officials</h2>
+            <div className="flex flex-wrap gap-3 mb-4 text-left mx-2">
+              <select className="select select-bordered" value={officialParty} onChange={(e) => setOfficialParty(e.target.value)}>
+                <option value="">All Parties</option>
+                <option value="Democratic">Democratic</option>
+                <option value="Republican">Republican</option>
+              </select>
 
-          {loadingBills ? (
-            <p>Loading...</p>
-          ) : filteredBills.length === 0 ? (
-            <p>No bills found.</p>
-          ) : (
-            <>
-              <ul className="list-disc list-inside text-left space-y-2 bg-white p-3 border rounded  ">
-                {filteredBills.slice(0, MAX_DISPLAYED_BILLS).map((bill) => (
-                  <li key={bill.id}>
-                    <strong>{bill.title}</strong><br />
-                    <a
-                      href={bill.openstates_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline text-sm"
-                    >
-                      View Details
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <div className="flex justify-center mt-4 gap-2">
-                <button className="btn btn-sm" disabled={billPage === 1} onClick={() => setBillPage(prev => prev - 1)}>Prev</button>
-                <span className="self-center">Page {billPage} of {totalBillPages}</span>
-                <button className="btn btn-sm" disabled={billPage === totalBillPages} onClick={() => setBillPage(prev => prev + 1)}>Next</button>
-              </div>
-            </>
-          )}
+              <select className="select select-bordered" value={officialChamber} onChange={(e) => setOfficialChamber(e.target.value)}>
+                <option value="">All Chambers</option>
+                <option value="Representative">House</option>
+                <option value="Senator">Senate</option>
+              </select>
+            </div>
+            {loading ? <p>Loading...</p> : currentOfficials.length === 0 ? (
+              <p>No officials found.</p>
+            ) : (
+              <>
+                <div className="flex flex-col gap-4">
+                  {currentOfficials.map((o) => (
+                    <div key={o.id} className="p-3 border rounded shadow-sm flex gap-4 items-center bg-white">
+                      {o.image && <img src={o.image} alt={o.name} className="w-16 h-16 object-cover rounded" />}
+                      <div className="text-left">
+                        <h3 className="font-bold">{o.name}</h3>
+                        <p>District: {o.current_role?.district || 'N/A'}</p>
+                        <p>Party: {o.party || 'N/A'}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-center mt-4 gap-2">
+                  <button className="btn btn-sm" disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>Prev</button>
+                  <span className="self-center">Page {currentPage} of {totalPages}</span>
+                  <button className="btn btn-sm" disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}>Next</button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

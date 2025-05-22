@@ -76,7 +76,7 @@ function App() {
             token ? (
               <Home token={token} uid={uid} />
             ) : (
-              <Navigate to="/auth" />
+              <Navigate to="/" />
             )
           }
         />

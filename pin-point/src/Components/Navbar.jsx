@@ -51,21 +51,30 @@ const Navbar = ({ token, handleLogout }) => {
                 <li>
                   <a onClick={() => {
 
-                    navigate("/home")
+                    navigate("/home");
+                    document.activeElement?.blur();
+                    
                   }}>Homepage</a>
                 </li>
 
                 <li>
-                  <a onClick={() => { navigate("/account") }} >Account</a>
+                  <a onClick={() => { navigate("/account");
+                  document.activeElement?.blur();
+                  
+                   }} >Account</a>
                 </li>
 
                 <li>
-                  <a onClick={() => { handleLogout() }} >Logout</a>
+                  <a onClick={() => { handleLogout();
+                    document.activeElement?.blur();
+                  }} >Logout</a>
                 </li>
               </>
             ) : ( hideAuth ? null : 
               <li>
-                <a onClick={() => { navigate("/auth") }} >Signup/Login</a>
+                <a onClick={() => { navigate("/auth");
+                  document.activeElement?.blur();
+                 }} >Signup/Login</a>
               </li>
             )
             }

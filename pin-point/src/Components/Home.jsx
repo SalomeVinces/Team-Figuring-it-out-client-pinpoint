@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom"
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { getStateFromZip } from '../utils/zipToState.js'
+import pin3 from "../assets/Pin3.png"
 
 const Home = ({ token, uid }) => {
   const [user, setUser] = useState(null);
@@ -193,9 +194,13 @@ const Home = ({ token, uid }) => {
               <p>No bills found.</p>
             ) : (
               <>
-                <ul className="list-disc list-inside text-left space-y-2 bg-white p-3 border rounded">
+                {/* <ul className="list-disc list-inside text-left space-y-2 bg-white p-3 border rounded">
                   {currentBills.map((bill) => (
                     <li key={bill.id}>
+                     <div className="bg-white p-3 border rounded shadow " >
+                      
+ 
+
                       <strong>{bill.title}</strong><br />
                       <a
                         href={bill.openstates_url}
@@ -203,11 +208,45 @@ const Home = ({ token, uid }) => {
                         rel="noopener noreferrer"
                         className="text-blue-600 underline text-sm"
                       >
-                        View Details
+                       
+                       View Details 
                       </a>
                     </li>
                   ))}
-                </ul>
+                </ul> */}
+<ul className="list-none list-inside text-left space-y-2 p-3">
+  {filteredBills.slice(0, MAX_DISPLAYED_BILLS).map((bill) => (
+    <li key={bill.id}>
+      <div className="bg-white p-3 border rounded shadow">
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img
+            src={pin3}
+            style={{
+              minHeight: "2em",
+              minWidth: "1.5em",
+              maxWidth: "1.5em",
+              maxHeight: "2em",
+              marginRight: "0.75rem" // espace entre l'icône et le texte
+            }}
+            alt="pin icon"
+          />
+          <div>
+            <strong>{bill.title}</strong><br />
+            <a
+              href={bill.openstates_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline text-sm"
+            >
+              View Details
+            </a>
+          </div>
+        </div>
+      </div>
+    </li>
+  ))}
+</ul>
+
 
                 <div className="flex justify-center mt-4 gap-2">
                   <button
@@ -233,7 +272,7 @@ const Home = ({ token, uid }) => {
         <div className="flex flex-col md:flex-row gap-4 px-4">
           <div className="flex-1 overflow-auto border rounded bg-base-300  basis-55" style={{ background: "#415E6C" }}>
             <h2 className="text-lg font-semibold mb-2 text-white " >Officials</h2>
-            <div className="flex flex-wrap gap-3 mb-4 text-left mx-2">
+            <div className="flex flex-wrap gap-3 mb-4 text-left mx-2 ">
               <select className="select select-bordered" value={officialParty} onChange={(e) => setOfficialParty(e.target.value)}>
                 <option value="">All Parties</option>
                 <option value="Democratic">Democratic</option>
@@ -250,7 +289,7 @@ const Home = ({ token, uid }) => {
               <p>No officials found.</p>
             ) : (
               <>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 px-4">
                   {currentOfficials.map((o) => (
                     <div key={o.id} className="p-3 border rounded shadow-sm flex gap-4 items-center bg-white">
                       {o.image && <img src={o.image} alt={o.name} className="w-16 h-16 object-cover rounded" />}

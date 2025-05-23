@@ -234,38 +234,38 @@ const Home = ({ token, uid, openStatesCache }) => {
                     </li>
                   ))}
                 </ul> */}
-<ul className="list-none list-inside text-left space-y-2 p-3">
-  {filteredBills.slice(0, MAX_DISPLAYED_BILLS).map((bill) => (
-    <li key={bill.id}>
-      <div className="bg-white p-3 border rounded shadow">
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={pin3}
-            style={{
-              minHeight: "2em",
-              minWidth: "1.5em",
-              maxWidth: "1.5em",
-              maxHeight: "2em",
-              marginRight: "0.75rem" // espace entre l'icône et le texte
-            }}
-            alt="pin icon"
-          />
-          <div>
-            <strong>{bill.title}</strong><br />
-            <a
-              href={bill.openstates_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline text-sm"
-            >
-              View Details
-            </a>
-          </div>
-        </div>
-      </div>
-    </li>
-  ))}
-</ul>
+                <ul className="list-none list-inside text-left space-y-2 p-3">
+                  {currentBills.map((bill) => (
+                    <li key={bill.id}>
+                      <div className="bg-white p-3 border rounded shadow">
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <img
+                            src={pin3}
+                            style={{
+                              minHeight: "2em",
+                              minWidth: "1.5em",
+                              maxWidth: "1.5em",
+                              maxHeight: "2em",
+                              marginRight: "0.75rem"
+                            }}
+                            alt="pin icon"
+                          />
+                          <div>
+                            <strong>{bill.title}</strong><br />
+                            <a
+                              href={bill.openstates_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 underline text-sm"
+                            >
+                              View Details
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
 
 
                 <div className="flex justify-center mt-4 gap-2">
@@ -317,6 +317,17 @@ const Home = ({ token, uid, openStatesCache }) => {
                         <h3 className="font-bold">{o.name}</h3>
                         <p>District: {o.current_role?.district || 'N/A'}</p>
                         <p>Party: {o.party || 'N/A'}</p>
+                        {o.email && (
+                          <p>
+                            <a
+                              style={{ fontSize: o.email.length > 25 ? ".6em" : undefined }}
+                              href={`mailto:${o.email}`}
+                              className="text-blue-600 underline"
+                            >
+                              {o.email}
+                            </a>
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom"
 
 import './App.css'
@@ -15,6 +15,7 @@ function App() {
   const [token, setToken] = useState("")
   const [uid, setUid] = useState("")
   const navigate = useNavigate()
+  const openStatesCache = useRef({}); // Persistent cache
 
   // Update state and localStorage with token + uid after login/signup
   const updateToken = (passedToken, passedUid) => {
@@ -74,7 +75,7 @@ function App() {
           path="/home"
           element={
             token ? (
-              <Home token={token} uid={uid} />
+              <Home token={token} uid={uid} openStatesCache={openStatesCache} />
             ) : (
               <Navigate to="/" />
             )

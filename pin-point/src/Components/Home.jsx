@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Navigate, useNavigate } from "react-router-dom"
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { getStateFromZip } from '../utils/zipToState.js'
+import pin3 from "../assets/Pin3.png"
 
-const Home = ({ token, uid }) => {
+
+const Home = ({ token, uid, openStatesCache }) => {
   const [user, setUser] = useState(null);
   const [officials, setOfficials] = useState([]);
   const [bills, setBills] = useState([]);
@@ -14,7 +15,7 @@ const Home = ({ token, uid }) => {
   const officialsPerPage = 5;
 
   const [billPage, setBillPage] = useState(1);
-  const billsPerPage = 5;
+  const billsPerPage = 3; // Show 3 bills per page
 
   const mapRef = useRef(null);
   const zipLayerRef = useRef(null);
@@ -26,13 +27,10 @@ const Home = ({ token, uid }) => {
 
   const [filteredBills, setFilteredBills] = useState([]);
   const [loadingBills, setLoadingBills] = useState(false);
-  const MAX_DISPLAYED_BILLS = 5;
   const [stateCode, setStateCode] = useState("");
 
   const [officialParty, setOfficialParty] = useState("");
   const [officialChamber, setOfficialChamber] = useState("");
-
-  const navigate = useNavigate();
 
   const fetchUser = async () => {
     try {
@@ -49,12 +47,26 @@ const Home = ({ token, uid }) => {
     }
   };
 
-  const fetchOpenStatesData = async (stateCode) => {
+  // Add forceRefresh parameter (default false)
+  const fetchOpenStatesData = async (stateCode, forceRefresh = false) => {
+    console.log(stateCode)
+    if (!forceRefresh && openStatesCache.current[stateCode]) {
+      const cached = openStatesCache.current[stateCode];
+      console.log("Using cached OpenStates data for state:", stateCode);
+      setOfficials(cached.officials);
+      setBills(cached.bills);
+      return;
+    }
     try {
-      const res = await fetch(`http://localhost:8080/landing/${stateCode}`);
+      // Add ?officialsLimit=20&billsLimit=20 to your backend endpoint if supported
+      const res = await fetch(`http://localhost:8080/landing/${stateCode}?officialsLimit=20&billsLimit=20`);
       const data = await res.json();
-      setOfficials(data.officials || []);
-      setBills(data.bills || []);
+      const officials = Array.isArray(data.officials) ? data.officials : [];
+      const bills = Array.isArray(data.bills) ? data.bills : [];
+      setOfficials(officials);
+      setBills(bills);
+      openStatesCache.current[stateCode] = { officials, bills };
+      console.log("Cache updated for state:", stateCode, openStatesCache.current[stateCode]);
     } catch (err) {
       console.error("Error fetching OpenStates data:", err);
     }
@@ -99,7 +111,7 @@ const Home = ({ token, uid }) => {
       setStateCode(code);
       if (code) {
         await fetchOpenStatesData(code);
-        await handleSearch(code);
+        setFilteredBills(openStatesCache.current[code]?.bills || []); // Set filteredBills to initial bills
       }
       setLoading(false);
     };
@@ -116,18 +128,27 @@ const Home = ({ token, uid }) => {
     setBillPage(1);
     setLoadingBills(true);
     try {
+      // If no search term and no chamber selected, reset to initial bills
+      if (!searchTerm.trim() && !selectedChamber) {
+        setFilteredBills(bills);
+        setLoadingBills(false);
+        return;
+      }
       const searchTerms = searchTerm.split(",").map(t => t.trim()).filter(Boolean);
       let combinedResults = [];
       for (const term of searchTerms.length ? searchTerms : [""]) {
         const url = new URL("http://localhost:8080/bills");
-        if (jurisdictionOverride) url.searchParams.append("jurisdiction", jurisdictionOverride);
+        // Ensure jurisdictionOverride is a string
+        let jurisdiction = jurisdictionOverride;
+        if (jurisdiction && typeof jurisdiction === 'object') {
+          jurisdiction = jurisdiction.value || jurisdiction.name || '';
+        }
+        if (jurisdiction) url.searchParams.append("jurisdiction", jurisdiction);
         if (term) url.searchParams.append("q", term);
         if (selectedChamber) {
           console.log("Selected Chamber (frontend):", selectedChamber);
           url.searchParams.append("chamber", selectedChamber);
         }
-
-
         const res = await fetch(url.toString());
         const data = await res.json();
         combinedResults.push(...(data.results || []));

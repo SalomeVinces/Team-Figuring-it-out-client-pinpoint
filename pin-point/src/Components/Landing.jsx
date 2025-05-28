@@ -79,8 +79,7 @@ const Landing = ({ handleNavigation }) => {
                     <h1 className="text-7xl font-bold text-shadow-lg/20 mb-5 tagesschrift-regular"> Pinpoint</h1>
                     <div style={{background:"rgba(0,0,0,.6)"}}>
                     <p className="text-center leading-relaxed font-medium max-w-3xl mx-auto rounded text-xl text-shadow-lg/20 p-8  ">
-                        Pinpoint makes your work easier. Find the information you need, organize your tasks, and gain clarity.
-                        Everything becomes faster, simpler, and more efficient.
+                        Pinpoint helps you stay informed by instantly showing you local bills and elected officials. Find the information you need and gain clarity. Everything becomes faster, simpler, and more efficient.
                     </p>
                     </div>
                 </div>

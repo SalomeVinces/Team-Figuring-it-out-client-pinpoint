@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Account = ({ token, uid }) => {
     // Initial form state
@@ -9,7 +10,7 @@ const Account = ({ token, uid }) => {
         dateOfBirth: "",
         zipCode: ""
     });
-
+    const navigate = useNavigate();
     // Fetch user data when component mounts
     useEffect(() => {
         const fetchUser = async () => {
@@ -62,6 +63,7 @@ const Account = ({ token, uid }) => {
             const data = await res.json();
             if (data.Result) {
                 alert("Account updated successfully!");
+                navigate("/home")
             } else {
                 alert(data.Error || "Update failed.");
             }

@@ -24,7 +24,6 @@ const Home = ({ token, uid, openStatesCache }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedChamber, setSelectedChamber] = useState("");
 
-
   const [filteredBills, setFilteredBills] = useState([]);
   const [loadingBills, setLoadingBills] = useState(false);
   const [stateCode, setStateCode] = useState("");
@@ -99,7 +98,9 @@ const Home = ({ token, uid, openStatesCache }) => {
           layer.bindPopup(`ZIP Code: ${zip}`);
         }
       }).addTo(mapRef.current);
-      const zipFeature = zipFeaturesRef.current[userData.zipCode];
+      // Ensure zip codes are always treated as strings with leading zeros
+      const userZip = userData.zipCode ? String(userData.zipCode).padStart(5, '0') : '';
+      const zipFeature = zipFeaturesRef.current[userZip];
       if (zipFeature) {
         const { layer } = zipFeature;
         mapRef.current.fitBounds(layer.getBounds());
@@ -136,19 +137,21 @@ const Home = ({ token, uid, openStatesCache }) => {
       }
       const searchTerms = searchTerm.split(",").map(t => t.trim()).filter(Boolean);
       let combinedResults = [];
+      let jurisdiction = jurisdictionOverride;
+      if (jurisdiction && typeof jurisdiction === 'object') {
+        jurisdiction = jurisdiction.value || jurisdiction.name || '';
+      }
+      if (!jurisdiction) {
+        // Prevent backend call if jurisdiction is missing
+        setFilteredBills([]);
+        setLoadingBills(false);
+        return;
+      }
       for (const term of searchTerms.length ? searchTerms : [""]) {
         const url = new URL("http://localhost:8080/bills");
-        // Ensure jurisdictionOverride is a string
-        let jurisdiction = jurisdictionOverride;
-        if (jurisdiction && typeof jurisdiction === 'object') {
-          jurisdiction = jurisdiction.value || jurisdiction.name || '';
-        }
-        if (jurisdiction) url.searchParams.append("jurisdiction", jurisdiction);
+        url.searchParams.append("jurisdiction", jurisdiction);
         if (term) url.searchParams.append("q", term);
-        if (selectedChamber) {
-          console.log("Selected Chamber (frontend):", selectedChamber);
-          url.searchParams.append("chamber", selectedChamber);
-        }
+        if (selectedChamber) url.searchParams.append("chamber", selectedChamber);
         const res = await fetch(url.toString());
         const data = await res.json();
         combinedResults.push(...(data.results || []));
@@ -161,6 +164,43 @@ const Home = ({ token, uid, openStatesCache }) => {
       setLoadingBills(false);
     }
   };
+
+  // Ensure bills are filtered by chamber from cache if no search term is present
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      let filtered = bills;
+      if (selectedChamber) {
+        filtered = bills.filter(bill => {
+          const classification =
+            bill.from_organization?.classification ||
+            (bill.from_organization && typeof bill.from_organization === "string" ? bill.from_organization : "");
+          return (
+            typeof classification === "string" &&
+            classification.toLowerCase() === selectedChamber.toLowerCase()
+          );
+        });
+      }
+      setFilteredBills(filtered);
+    } else {
+      // If search term is present, filter locally by bill.title (case-insensitive, partial match)
+      let filtered = bills.filter(bill =>
+        bill.title && bill.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
+      );
+      if (selectedChamber) {
+        filtered = filtered.filter(bill => {
+          const classification =
+            bill.from_organization?.classification ||
+            (bill.from_organization && typeof bill.from_organization === "string" ? bill.from_organization : "");
+          return (
+            typeof classification === "string" &&
+            classification.toLowerCase() === selectedChamber.toLowerCase()
+          );
+        });
+      }
+      setFilteredBills(filtered);
+    }
+    // eslint-disable-next-line
+  }, [selectedChamber, bills, searchTerm]);
 
   const filteredOfficials = officials.filter(o => {
     const partyMatch = !officialParty || o.party === officialParty;
@@ -190,9 +230,11 @@ const Home = ({ token, uid, openStatesCache }) => {
         <div className="flex-3 border-1 rounded bg-base-300" style={{ background: "#415E6C" }} >
           <h2 className="text-lg font-semibold mb-2 text-white">Your District</h2>
           <div id="map" style={{ height: '50vh', width: '100%' }}></div>
+
+          {/* Bills */}
           <div className="flex-1 overflow-auto rounded bg-base-300 p-4" style={{ background: "#415E6C" }}>
             <h2 className="text-lg font-semibold mb-2 text-white">Recent Bills</h2>
-            <div className="flex flex-wrap gap-3 mb-4 text-left">
+            <div className="flex flex-wrap gap-3 mb-4 text-left justify-center items-center">
               <input type="text" placeholder="Search term" className="input input-bordered" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
 
               <select
@@ -201,11 +243,9 @@ const Home = ({ token, uid, openStatesCache }) => {
                 onChange={(e) => setSelectedChamber(e.target.value)}
               >
                 <option value="">All Chambers</option>
-                <option value="House">House</option>
-                <option value="Senate">Senate</option>
+                <option value="lower">House (Representatives)</option>
+                <option value="upper">Senate</option>
               </select>
-
-              <button className="btn btn-accent" onClick={handleSearch}>Search</button>
             </div>
 
             {loadingBills ? (
@@ -252,6 +292,9 @@ const Home = ({ token, uid, openStatesCache }) => {
                           />
                           <div>
                             <strong>{bill.title}</strong><br />
+                            {bill.identifier && (
+                              <span className="ml-2 text-xs text-gray-600">Bill ID: {bill.identifier} </span> 
+                            )}
                             <a
                               href={bill.openstates_url}
                               target="_blank"
@@ -260,6 +303,7 @@ const Home = ({ token, uid, openStatesCache }) => {
                             >
                               View Details
                             </a>
+                            
                           </div>
                         </div>
                       </div>
@@ -289,6 +333,8 @@ const Home = ({ token, uid, openStatesCache }) => {
             )}
           </div>
         </div>
+
+        {/* Officials */}
         <div className="flex flex-col md:flex-row gap-4 px-4">
           <div className="flex-1 overflow-auto border rounded bg-base-300  basis-55" style={{ background: "#415E6C" }}>
             <h2 className="text-lg font-semibold mb-2 text-white " >Officials</h2>
